@@ -1,0 +1,3 @@
+#! /bin/sh
+
+curl -s http://rss.wunderground.com/auto/rss_full/AZ/Scottsdale.xml?units=english | perl -ne 'if (/Current Conditions :/) {chomp;/Conditions : (.*) -/; print "$1"; }'
