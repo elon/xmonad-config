@@ -400,7 +400,8 @@ myLayout = avoidStruts $
 -- see xprop & xprop2
 --
 myManageHook = manageDocks <+> composeAll
-    [ className =? "Rhythmbox"        --> doShift "mail"
+    [ className =? "Rhythmbox"        --> doShift "media"
+    , className =? "Audacious"        --> doShift "media"
 	, className =? "Unity-2d-panel"	--> doIgnore
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "Do"             --> doIgnore
