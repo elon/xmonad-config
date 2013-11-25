@@ -153,8 +153,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch a terminal (small font)
     , ((modm .|. shiftMask, xK_minus), spawn "gnome-terminal --profile=Small")
 
-    , ((modm,               xK_g     ), spawn "gnome-do")
-
     -- launch browser
     , ((modm,               xK_f     ), spawn "firefox")
 
@@ -237,8 +235,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_q     ), killPanels >> restart "xmonad" True)
 
 	-- Sleep machine; use sudoers to void pwd request
-    -- , ((modm .|. controlMask , xK_End   ), spawn "sudo shutdown -h now")
-    , ((modm .|. controlMask , xK_End   ), spawn "sudo pm-suspend")
+    , ((modm              , xK_End   ), spawn "sudo pm-suspend")
 
 	-- dismount mt4g
     , ((modm .|. controlMask , xF86XK_Eject   ), spawn "umount /media/mt4g")
