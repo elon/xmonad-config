@@ -336,12 +336,13 @@ full = noBorders Full
 imLayout = named "IM" $
     combineTwoP (TwoPane 0.03 0.2) rosterLayout mainLayout isRoster
     where rosterLayout = mosaicLayout
-          mainLayout = mosaicLayout
+          mainLayout = Grid
           isRoster = pidginRoster `Or` skypeRoster
           pidginRoster = And (ClassName "Pidgin") (Role "buddy_list")
           -- skypeRoster = Title $ skypeLogin ++ " - Skype™"
           -- skypeLogin = "elon00"
-          skypeRoster = And (ClassName "Skype") (Not (Role "ConversationsWindow"))
+          skypeRoster = And (ClassName "Skype") (Not (Or (Role "ConversationsWindow") (Role "CallWindow")))
+          -- Role Options should also be in main
 
 mediaLayout = named "media" $ magnifiercz' 1.5 $ Tall nmaster delta ratio
 	where
