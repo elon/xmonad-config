@@ -353,7 +353,7 @@ mediaLayout = named "media" $ magnifiercz' 1.5 $ Tall nmaster delta ratio
 myLayout = avoidStruts $ 
     onWorkspace "gimp" (withIM (0.11) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.15) (Role "gimp-dock") Full) $
     onWorkspace "dev" (tiled ||| Accordion) $
-    onWorkspace "media" (mediaLayout) $
+    onWorkspace "media" (mediaLayout ||| Full) $
     onWorkspace "vm" (Full ||| tiled) $
 	onWorkspace "im" imLayout $
     (tiled ||| Mirror tiled ||| Full ||| goldenStack)
