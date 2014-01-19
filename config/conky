@@ -20,8 +20,13 @@ ${if_running audacious}^fg()Audacious: ^fg(\#909090)${audacious_status}: ${audac
 ${if_existing  /tmp/luks-status} ^fg()L: ^fg(\#909090)${execi 10 cat /tmp/luks-status} $endif \
 ^fg()Cpu: ^fg(\#909090)${cpu}% \
 ^fg()Mem: ^fg(\#909090)${memperc}% \
+${if_up wlan0} \
 ^fg()D: ^fg(\#909090)${downspeedf wlan0}K \
 ^fg()U: ^fg(\#909090)${upspeedf wlan0}K \
+$else \
+^fg()D: ^fg(\#909090)${downspeedf eth0}K \
+^fg()U: ^fg(\#909090)${upspeedf eth0}K \
+$endif \
 ^fg()W: ^fg(\#909090)${execi 600 ~/.xmonad/bin/weather.rb} \
 ^fg()AZ: ^fg(\#909090)${time %a %b %d %H:%M} \
 # /usr/share/zoneinfo
