@@ -339,9 +339,10 @@ imLayout = named "IM" $
           mainLayout = Grid
           isRoster = pidginRoster `Or` skypeRoster
           pidginRoster = And (ClassName "Pidgin") (Role "buddy_list")
-          -- skypeRoster = Title $ skypeLogin ++ " - Skype™"
-          -- skypeLogin = "elon00"
-          skypeRoster = And (ClassName "Skype") (Not (Or (Role "ConversationsWindow") (Role "CallWindow")))
+          skypeRoster = Title $ skypeLogin ++ " - Skype™"
+          skypeLogin = "elon00"
+          -- next is preferable to last but too many window types - figure this out later
+          -- skypeRoster = And (ClassName "Skype") (Not (Or (Role "ConversationsWindow") (Role "CallWindow")))
           -- Role Options should also be in main
 
 mediaLayout = named "media" $ magnifiercz' 1.5 $ Tall nmaster delta ratio
