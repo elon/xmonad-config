@@ -26,6 +26,7 @@ import System.Posix.Unistd
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.CycleWS
 import XMonad.Config.Desktop
+import XMonad.Config.Xfce
 import XMonad.Config.Gnome
 import XMonad hiding ((|||))
 import XMonad.Hooks.DynamicLog
@@ -68,7 +69,7 @@ import XMonad.Util.Run
 spawn' x = spawn $ x ++ "&"
 
 killPanels = do
-    spawn' "killall conky dzen2"
+    spawn' "killall conky dzen2 trayer stalonetray"
     spawn' "cat /dev/null > /tmp/haskell.log"
     return ()
 
@@ -124,7 +125,7 @@ main = do
 		, startupHook        = myStartupHook
 		} `additionalKeysP` (myAddKeys hostname)
 
-myTerminal      = "gnome-terminal"
+myTerminal      = "urxvt"
 
 myWorkspaces    = map show [1..4] ++ 
                     [ "dev"
@@ -159,9 +160,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch gtd
     , ((modm,               xK_grave     ), unsafeSpawn "$HOME/bin/gtd")
 
-    -- launch nautilus browser
-    , ((modm,               xK_o     ), spawn "nautilus --no-desktop ~")
-    , ((modm,               xK_d     ), spawn "nautilus --no-desktop ~/Desktop")
+    -- launch file manager
+    , ((modm,               xK_o     ), spawn "$HOME/bin/file-manager ~")
+    , ((modm,               xK_d     ), spawn "$HOME/bin/file-manager ~/Desktop")
 
     -- close focused window 
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -221,7 +222,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((controlMask, xK_q     		 ), spawn "notify-send 'consumed ctrl-q' -t 1000")
 
     -- Gnome's Print screen functionality seems borked when using xmonad
-    , ((modm ,              xK_Print ), spawn "exe=`gnome-screenshot` && eval \"exec $exe\"")
+    , ((modm ,              xK_Print ), spawn "xfce4-screenshooter")
 
     -- Switch workspaces (and move windows) horizontally
     -- , ((modm              , xK_Left  ), prevWS )
@@ -234,11 +235,17 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Restart xmonad
     , ((modm              , xK_q     ), killPanels >> restart "xmonad" True)
 
+    -- lock screen
+    , ((modm .|. shiftMask , xK_l   ), spawn "xscreensaver-command --lock")
+
 	-- Sleep machine; use sudoers to void pwd request
     , ((modm              , xK_End   ), spawn "sudo pm-suspend")
 
 	-- dismount mt4g
     , ((modm .|. controlMask , xF86XK_Eject   ), spawn "umount /media/mt4g")
+
+    -- xfce menu
+    , ((modm              , xK_Escape), spawn "xfdesktop --menu")
 
     -- Prompts
     --, ((modMask              , xK_a     ), dirExecPrompt myXPConfig spawn "/home/bla/.xmonad/scripts")
@@ -290,7 +297,7 @@ screenKeyOrder10 = [(mask ++ "M-" ++ [key], screenWorkspace scr >>= flip whenJus
                     , (action, mask) <- [ (W.view, "") , (W.shift, "S-")]]
 
 myAddKeys hostname = mediaKeys ++ case hostname of
-    "w520" -> screenKeyOrder10
+    "notnow" -> screenKeyOrder10
     _ -> []
 
 
@@ -417,6 +424,8 @@ myManageHook = manageDocks <+> composeAll
     , className =? "Skype" <||> resource =? "skype" --> doShift "im"
     , className =? "Pidgin"         --> doF (W.shift "im")
 	, className =? "emulator-arm" --> doFloat
+	, className =? "Xfce4-notifyd" --> doIgnore
+	, className =? "stalonetray" --> doIgnore
     , isFullscreen                   --> doFullFloat
 	, title =? "Spotify"			--> doFloat
     , resource  =? "desktop_window"   --> doIgnore ]
