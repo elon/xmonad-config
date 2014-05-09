@@ -91,6 +91,21 @@ conkyBar x =
         , x
         , "-w 1920 -y 1064 -bg black -fg white -fn '-*-fixed-*-*-*-*-14-*-*-*-*-*-*-*'" ]
 
+trayerBar :: String -> String
+trayerBar x =
+    intercalate ""
+        [ "trayer --edge top --align right --SetDockType true --SetPartialStrut false"
+        , "--transparent true --alpha 0 --tint 0x484840"
+        , "--widthtype pixel --width 200 --height 24 --expand false" ]
+
+staloneBar :: String -> String
+staloneBar x =
+    intercalate ""
+        [ "stalonetray -bg '#484840' -f 0 --icon-gravity E --icon-size 20 --slot-size 24 "
+        , "--geometry 10x1+"
+        , show $ read x + 1679 -- 1679 or 3599
+        , "-1056" ]
+
 myStatusBarThemed = "-ta 'l' -bg '" ++ dustBackground ++ "' -h '" ++ barHeight ++ "' -fg '" ++ dustForeground ++ "' -fn '" ++ myFont ++ "'"
 myStatusBar x = 
     intercalate " "
