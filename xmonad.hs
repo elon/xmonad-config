@@ -172,8 +172,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch browser
     , ((modm,               xK_f     ), spawn "firefox")
 
-    -- launch gtd
-    , ((modm,               xK_grave     ), unsafeSpawn "$HOME/bin/gtd")
+    -- launch home vim session
+    , ((modm,               xK_grave     ), spawn "gvim -S $HOME/Session.vim")
 
     -- launch file manager
     , ((modm,               xK_o     ), spawn "$HOME/bin/file-manager ~")
@@ -261,6 +261,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- xfce menu
     , ((modm              , xK_Escape), spawn "xfdesktop --menu")
+
+    -- sound / volume
+    , ((modm              , xK_equal), spawn "amixer set Master 5%+")
+    , ((modm              , xK_minus), spawn "amixer set Master 5%-")
 
     -- Prompts
     --, ((modMask              , xK_a     ), dirExecPrompt myXPConfig spawn "/home/bla/.xmonad/scripts")
