@@ -27,8 +27,8 @@ $else \
 ^fg()D: ^fg(\#909090)${downspeedf eth0}K \
 ^fg()U: ^fg(\#909090)${upspeedf eth0}K \
 $endif \
-^fg()W: ^fg(\#909090)${execi 600 ~/.xmonad/bin/weather.rb} \
+^fg()W: ^fg(\#909090)${execi 1800 ~/.xmonad/bin/weather.rb} \
 ^fg()CA: ^fg(\#909090)${tztime America/Los_Angeles %H:%M} \
-^fg()AZ: ^fg(\#909090)${time %a %b %d %H:%M} \
 # /usr/share/zoneinfo
-^fg()NY: ^fg(\#909090)${tztime America/New_York %H:%M}
+^fg()NY: ^fg(\#909090)${tztime America/New_York %H:%M} \
+^fg()    AZ: ^fg(\#909090)${time %a %b %d %H:%M}

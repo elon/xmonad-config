@@ -1,14 +1,20 @@
-#! /usr/bin/env ruby
+#!/usr/bin/ruby
 
-require 'net/http'
-require "uri"
+begin
+  require 'open-uri'
+  require 'nokogiri'
 
-uri = URI.parse 'http://rss.wunderground.com/auto/rss_full/AZ/Scottsdale.xml?units=english'
-http = Net::HTTP.new(uri.host, uri.port)
-response = http.request(Net::HTTP::Get.new(uri.request_uri))
-# File.open('/tmp/1','w') { |f| f.write response.body }
+  url = 'http://www.weather.com/weather/today/Scottsdale+AZ+85255:4:US'
+  doc = Nokogiri::HTML(open(url))
 
-body = response.body
-current, pattern = body.scan(/Current Conditions : ([0-9]{2}\.[0-9]{1})F, (.*) -/)[0]
-high = body.scan(/High of ([0-9]{2})F/)[0][0]
-puts "#{current}/#{high} #{pattern}"
+  current = doc.css('.wx-temperature')[0].content
+  high = doc.css('.wx-temperature')[1].content
+  pattern = doc.css('.wx-phrase')[1].content
+  sunset = doc.css('.wx-astro-details dl.wx-first dd')[1].content
+  sunset = sunset.gsub(' ', '')
+
+  # apparently dzen doesn't like utf-8...
+  puts "#{current}/#{high} #{pattern} #{sunset}".encode('US-ASCII', :undef => :replace, :replace => '')
+rescue => e
+  puts "Error: #{e.to_s}"
+end
