@@ -101,7 +101,7 @@ trayerBar x =
 staloneBar :: String -> String
 staloneBar x =
     intercalate ""
-        [ "stalonetray -bg '#484840' -f 0 --icon-gravity E --icon-size 20 --slot-size 24 "
+        [ "stalonetray -bg '#484840' -f 0 --icon-gravity NE --icon-size 20 --slot-size 24 --grow-gravity NW --max-geometry 10x1 "
         , "--geometry 10x1+"
         , show $ read x + 1679 -- 1679 or 3599
         , "-1056" ]
@@ -110,8 +110,8 @@ myStatusBarThemed = "-ta 'l' -bg '" ++ dustBackground ++ "' -h '" ++ barHeight +
 myStatusBar x = 
     intercalate " "
         [ "dzen2 -x"
-        , show $ read x + 700
-        , "-y '0' -w '600'"
+        , show $ read x + 0
+        , "-y '0' -w '1720'"
         , myStatusBarThemed ]
 
 debug' s = do
@@ -122,9 +122,11 @@ main = do
     dzen <- spawnPipe $ myStatusBar $ mainScreenX screenCount
     -- debug' $ conkyBar $ mainScreenX screenCount
     spawn' $ conkyBar $ mainScreenX screenCount
+    spawn' $ staloneBar $ mainScreenX screenCount
+    unsafeSpawn "$HOME/bin/autostart-gui"
     home <- getHomeDirectory
     hostname <- getHostName
-    xmonad $ withUrgencyHook NoUrgencyHook $ ewmh gnomeConfig {
+    xmonad $ withUrgencyHook NoUrgencyHook $ ewmh xfceConfig {
 		terminal           = myTerminal
 		, focusFollowsMouse  = True
 		, borderWidth        = 1
@@ -536,6 +538,7 @@ quitWithWarning = do
     let m = "confirm quit"
     s <- dmenu [m]
     when (m == s) (io exitSuccess)
+    -- xfce4-session-logout
 
 getHostName :: IO String
 getHostName = do
