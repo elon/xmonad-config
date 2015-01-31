@@ -142,7 +142,7 @@ main = do
 
 myTerminal      = "urxvt"
 
-myWorkspaces    = map show [1..4] ++ 
+myWorkspaces    = map show [1..5] ++
                     [ "dev"
                     , "web"
                     , "media"
@@ -263,7 +263,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_Escape), spawn "xfdesktop --menu")
 
     -- sound / volume
-    , ((modm              , xK_equal), spawn "amixer set Master 5%+")
+    , ((modm              , xK_equal), spawn "amixer set Master 5%+ unmute")
     , ((modm              , xK_minus), spawn "amixer set Master 5%-")
 
     -- Prompts
