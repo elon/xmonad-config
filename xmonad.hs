@@ -147,6 +147,7 @@ myTerminal      = "urxvt"
 myWorkspaces    = map show [1..5] ++
                     [ "dev"
                     , "web"
+                    , "music"
                     , "media"
                     , "mail"
                     , "gimp"
@@ -427,8 +428,8 @@ myLayout = avoidStruts $
 -- see xprop & xprop2
 --
 myManageHook = manageDocks <+> composeAll
-    [ className =? "Rhythmbox"        --> doShift "media"
-    , className =? "Audacious"        --> doShift "media"
+    [ className =? "Rhythmbox"        --> doShift "music"
+    , className =? "Audacious"        --> doShift "music"
 	, className =? "Unity-2d-panel"	--> doIgnore
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "Do"             --> doIgnore
@@ -500,6 +501,7 @@ myXPConfig = defaultXPConfig {
                              , XMonad.Prompt.bgColor     = darkGray
                              , XMonad.Prompt.fgColor     = white
                              , XMonad.Prompt.borderColor = white
+                             , historySize = 0
 }
 
 myDzenPP h home = defaultPP
