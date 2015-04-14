@@ -37,6 +37,7 @@ import XMonad.Hooks.ManageHelpers (isFullscreen, isDialog,  doFullFloat, doCente
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook hiding (Never)
 import XMonad.Layout.Accordion
+import XMonad.Layout.Tabbed
 import XMonad.Layout.ComboP
 import XMonad.Layout.DwmStyle
 import XMonad.Layout.Grid
@@ -147,6 +148,7 @@ myTerminal      = "urxvt"
 myWorkspaces    = map show [1..5] ++
                     [ "dev"
                     , "web"
+                    , "office"
                     , "music"
                     , "media"
                     , "mail"
@@ -383,6 +385,7 @@ mediaLayout = named "media" $ magnifiercz' 1.5 $ Tall nmaster delta ratio
 myLayout = avoidStruts $ 
     onWorkspace "gimp" (withIM (0.11) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.15) (Role "gimp-dock") Full) $
     onWorkspace "dev" (tiled ||| Accordion) $
+    onWorkspace "office" (tiled ||| simpleTabbed) $
     onWorkspace "media" (mediaLayout ||| Full) $
     onWorkspace "vm" (Full ||| tiled) $
 	onWorkspace "im" imLayout $
@@ -422,6 +425,9 @@ myLayout = avoidStruts $
 --
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
+-- resource / appName - 1st element in WM_CLASS
+-- className - 2nd element in WM_CLASS
+-- title - WM_NAME
 --
 -- *** SEE ALSO bin/xmonad_prop shell script
 --
@@ -445,6 +451,7 @@ myManageHook = manageDocks <+> composeAll
     , className =? "Unity-2d-panel"        --> doIgnore
     , className =? "Skype" <||> resource =? "skype" --> doShift "im"
     , className =? "Pidgin"         --> doF (W.shift "im")
+    , className =? "libreoffice"         --> doF (W.shift "office")
 	, className =? "emulator-arm" --> doFloat
 	, className =? "Xfce4-notifyd" --> doIgnore
 	, className =? "stalonetray" --> doIgnore
