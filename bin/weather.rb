@@ -12,9 +12,11 @@ begin
   high = doc.css('div.bg.bg-su div.info strong.temp')[0].content rescue '?'
   sunset = doc.css('div#feature-sun.feature.feature-first p.time-period span.finish')[0].content rescue ''
   sunset = sunset.gsub(' ', '')
+  uv = doc.css('div#detail-now.detail-tab-panel.day ul.stats li strong')[2].content rescue ''
+  uv = "[#{uv}]" if uv != ''
 
   # apparently dzen doesn't like utf-8...
-  puts "#{current}/#{high} #{sunset}".encode('US-ASCII', :undef => :replace, :replace => '')
+  puts "#{current}/#{high} #{uv} #{sunset}".encode('US-ASCII', :undef => :replace, :replace => '')
 rescue => e
   puts "Error: #{e.to_s}"
 end
