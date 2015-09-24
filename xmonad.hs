@@ -175,7 +175,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_minus), spawn "gnome-terminal --profile=Small")
 
     -- launch browser
-    , ((modm,               xK_f     ), spawn "firefox")
+    , ((modm,               xK_f     ), spawn "google-chrome || firefox")
 
     -- launch home vim session
     , ((modm,               xK_grave     ), spawn "gvim -S $HOME/Session.vim")
