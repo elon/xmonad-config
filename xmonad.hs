@@ -182,7 +182,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch file manager
     , ((modm,               xK_o     ), spawn "$HOME/bin/file-manager ~")
-    , ((modm,               xK_d     ), spawn "$HOME/bin/file-manager ~/Desktop")
+    , ((modm,               xK_d     ), spawn "$HOME/bin/file-manager ~/data")
 
     -- close focused window 
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -268,8 +268,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_Escape), spawn "xfdesktop --menu")
 
     -- sound / volume
-    , ((modm              , xK_equal), spawn "amixer set Master 5%+ unmute")
-    , ((modm              , xK_minus), spawn "amixer set Master 5%-")
+    , ((modm              , xK_equal), spawn "volume up")
+    , ((modm              , xK_minus), spawn "volume down")
 
     -- Prompts
     --, ((modMask              , xK_a     ), dirExecPrompt myXPConfig spawn "/home/bla/.xmonad/scripts")
@@ -448,6 +448,7 @@ myManageHook = manageDocks <+> composeAll
     , (className =? "Firefox" <&&> resource =? "Dialog") --> doFloat
     , className =? "Download"         --> doFloat
     , className =? "Extension"        --> doFloat
+    , className =? "Ruby-send"         --> doIgnore
     , className =? "Unity-2d-panel"        --> doIgnore
     , className =? "Skype" <||> resource =? "skype" --> doShift "im"
     , className =? "Pidgin"         --> doF (W.shift "im")

@@ -5,7 +5,7 @@ background no
 out_to_console yes
 out_to_x no
 override_utf8_locale yes
-update_interval 1.5
+update_interval 2
 total_run_times 0
 # mpd_host 127.0.0.1
 # mpd_port 6600
@@ -18,6 +18,8 @@ TEXT
 # luks-status: single line space separated
 ${if_running audacious}^fg()Audacious: ^fg(\#909090)${audacious_status}: ${audacious_title 70} [${audacious_position}/${audacious_length}] $endif \
 ${if_existing  /tmp/luks-status} ^fg()L: ^fg(\#909090)${execi 10 cat /tmp/luks-status} $endif \
+# 15 seconds
+^fg()Vol: ^fg(\#909090)${execi 15 amixer get Master -M | grep -oE '[[:digit:]]*%'} \
 ^fg()Cpu: ^fg(\#909090)${cpu}% \
 ^fg()Mem: ^fg(\#909090)${memperc}% \
 ${if_up wlan0} \
@@ -27,8 +29,7 @@ $else \
 ^fg()D: ^fg(\#909090)${downspeedf eth0}K \
 ^fg()U: ^fg(\#909090)${upspeedf eth0}K \
 $endif \
-^fg()W: ^fg(\#909090)${execi 1800 ~/.xmonad/bin/weather.rb} \
-^fg()CA: ^fg(\#909090)${tztime America/Los_Angeles %H:%M} \
+^ca(1,~/.xmonad/bin/weather_popup.sh)^fg()W: ^fg(\#909090)${execi 1800 ~/.xmonad/bin/weather.rb} ^ca() \
+^fg()BTC: ^fg(\#909090)${execi 1800 ~/.xmonad/bin/bitcoin.rb} \
 # /usr/share/zoneinfo
-^fg()NY: ^fg(\#909090)${tztime America/New_York %H:%M} \
-^fg()    AZ: ^fg(\#909090)${time %a %b %d %H:%M}
+^ca(1,~/.xmonad/bin/time.rb) ^fg()AZ: ^fg(\#909090)${time %a %b %d %H:%M} ^ca()
