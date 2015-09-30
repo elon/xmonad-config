@@ -33,6 +33,7 @@ $else \
 ^fg()D: ^fg(\#909090)${downspeedf eth0}K \
 ^fg()U: ^fg(\#909090)${upspeedf eth0}K \
 $endif \
+$endif \
 ^ca(1,~/.xmonad/bin/weather_popup.sh)^fg()W: ^fg(\#909090)${execi 1800 ~/.xmonad/bin/weather.rb} ^ca() \
 ^fg()BTC: ^fg(\#909090)${execi 1800 ~/.xmonad/bin/bitcoin.rb} \
 # /usr/share/zoneinfo
