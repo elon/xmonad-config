@@ -175,7 +175,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_minus), spawn "gnome-terminal --profile=Small")
 
     -- launch browser
-    , ((modm,               xK_f     ), spawn "firefox")
+    , ((modm,               xK_f     ), spawn "google-chrome || firefox")
 
     -- launch home vim session
     , ((modm,               xK_grave     ), spawn "gvim -S $HOME/Session.vim")
@@ -259,7 +259,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask , xK_l   ), spawn "xscreensaver-command --lock")
 
 	-- Sleep machine; use sudoers to void pwd request
-    , ((modm              , xK_End   ), spawn "sudo pm-suspend")
+    , ((modm              , xK_End   ), spawn "$HOME/bin/mysleep")
 
 	-- dismount mt4g
     , ((modm .|. controlMask , xF86XK_Eject   ), spawn "umount /media/mt4g")
